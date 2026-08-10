@@ -1,0 +1,138 @@
+.runner-section {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.runner-section h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, var(--sugimoto), var(--maekawa-text));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ゲーム画面はダークのまま（明るいサイトとのコントラストで「画面」感を出す） */
+.runner-wrapper {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  border: 3px solid var(--text-dim);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #141420;
+  box-shadow: 8px 8px 0 rgba(182, 0, 255, 0.22);
+}
+
+.runner-wrapper canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.runner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  background: rgba(10, 10, 15, 0.85);
+  text-align: center;
+  padding: 1rem;
+  color: #f2edfa; /* オーバーレイは常にダークなので明色固定 */
+}
+
+.runner-overlay.hidden {
+  display: none;
+}
+
+.runner-overlay h2 {
+  font-size: 1.6rem;
+}
+
+.host-buttons {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.host-buttons button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 1rem 2rem 0.8rem;
+  border-radius: 8px;
+  background: var(--bg-card);
+  color: var(--host-color);
+  border: 2px solid var(--host-color);
+}
+
+.host-buttons button img {
+  height: 110px;
+  width: auto;
+}
+
+.host-buttons button span {
+  color: var(--text-primary); /* 白ボタン上のラベルは濃色で */
+}
+
+.host-buttons button:hover span {
+  color: #0a0a0f;
+}
+
+.host-buttons button:hover {
+  background: var(--host-color);
+  color: #0a0a0f;
+  box-shadow: 0 0 20px var(--host-color);
+}
+
+#retry-button {
+  font-size: 1.1rem;
+  padding: 0.8rem 2rem;
+  background: linear-gradient(135deg, var(--accent), var(--sugimoto));
+  color: white;
+  border-radius: 8px;
+}
+
+.hint {
+  color: #cdc2e0;
+  font-size: 0.9rem;
+  font-family: var(--font-pixel);
+}
+
+.collected-episodes {
+  max-width: 80%;
+  color: #cdc2e0;
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.runner-hud {
+  position: absolute;
+  top: 0.8rem;
+  right: 1rem;
+  font-family: var(--font-pixel);
+  font-size: 1rem;
+  color: #ffffff; /* ダークなゲーム画面上なので明色固定 */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .runner-section {
+    padding: 1rem;
+  }
+
+  .runner-wrapper {
+    height: 300px;
+  }
+
+  .host-buttons button {
+    padding: 0.8rem 1.6rem;
+  }
+}
