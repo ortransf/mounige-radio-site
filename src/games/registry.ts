@@ -17,4 +17,13 @@ export const GAMES: GameEntry[] = [
     emoji: '🏃',
     thumbnail: 'images/games/runner/thumbnail.png',
   },
+  {
+    id: 'cards',
+    name: 'もう逃げトレーディングカード',
+    description:
+      'パックを開けて名場面カードを集めよう。全20種、キラのスーパーレアやウルトラレアも入っている。',
+    path: 'games/cards/',
+    emoji: '🃏',
+    thumbnail: 'images/cards/art/card20.jpg',
+  },
 ];

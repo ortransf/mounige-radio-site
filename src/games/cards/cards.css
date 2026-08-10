@@ -1,0 +1,257 @@
+.cards-section {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+  text-align: center;
+}
+
+.cards-section h1 {
+  margin-bottom: 0.6rem;
+  background: linear-gradient(135deg, var(--sugimoto), var(--maekawa-text));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cards-lead {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+/* --- 未開封パック --- */
+.pack-stage {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.pack-stage.hidden,
+.reveal.hidden,
+.again-button.hidden {
+  display: none;
+}
+
+.pack {
+  width: 240px;
+  height: 340px;
+  border-radius: 14px;
+  border: 3px solid var(--text-dim);
+  background: linear-gradient(150deg, #ffd6f0, #efc9ff 55%, #ffeaf6);
+  box-shadow: 8px 8px 0 rgba(182, 0, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: packFloat 3s ease-in-out infinite;
+}
+
+.pack img {
+  width: 78%;
+}
+
+.pack-label {
+  font-family: var(--font-pixel);
+  color: var(--accent);
+  letter-spacing: 0.08em;
+}
+
+.pack:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 11px 11px 0 rgba(182, 0, 255, 0.24);
+}
+
+@keyframes packFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* --- 開封後 --- */
+.reveal-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  perspective: 1200px;
+}
+
+.card {
+  width: 190px;
+  aspect-ratio: 3 / 4.2;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  animation: dealIn 0.45s ease-out backwards;
+}
+
+@keyframes dealIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.9); }
+  to { opacity: 1; transform: none; }
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.4, 0.1, 0.2, 1);
+}
+
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-back,
+.card-front {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--text-dim);
+  background: linear-gradient(150deg, #efc9ff, #ffd6f0);
+}
+
+.card-back img {
+  width: 70%;
+  opacity: 0.9;
+}
+
+.card-front {
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-card);
+  border: 3px solid var(--text-dim);
+}
+
+/* レアリティごとの縁取り */
+.card-front.rarity-2 { border-color: var(--maekawa-text); }
+.card-front.rarity-3 { border-color: var(--accent); }
+.card-front.rarity-4 {
+  border-color: #ffb300;
+  box-shadow: inset 0 0 18px rgba(255, 179, 0, 0.45);
+}
+
+.card-art {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
+
+.card-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-char {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 76%;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+}
+
+/* 2人並びの素材は横長なので幅で合わせる */
+.card-char.wide {
+  height: auto;
+  width: 94%;
+  bottom: 4%;
+}
+
+.card-rarity {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 0.75rem;
+  color: #ffd94a;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  letter-spacing: -1px;
+}
+
+.card-text {
+  padding: 0.5rem 0.6rem 0.3rem;
+  background: var(--bg-card);
+  text-align: left;
+}
+
+.card-text h2 {
+  font-size: 0.95rem;
+  line-height: 1.3;
+  margin-bottom: 0.2rem;
+}
+
+.card-text p {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.card-no {
+  display: block;
+  padding: 0 0.6rem 0.5rem;
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  text-align: left;
+}
+
+/* スーパーレア以上のキラ演出 */
+.card.shine .card-front::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.75) 48%, transparent 62%);
+  animation: shineSweep 1.1s ease-out 0.5s;
+  pointer-events: none;
+}
+
+@keyframes shineSweep {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(120%); }
+}
+
+.reveal-hint {
+  margin-top: 1.5rem;
+  font-family: var(--font-pixel);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.again-button {
+  margin-top: 1.2rem;
+  padding: 0.9rem 2rem;
+  font-size: 1rem;
+  color: white;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent), var(--sugimoto));
+  box-shadow: 4px 4px 0 rgba(182, 0, 255, 0.3);
+}
+
+.again-button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(182, 0, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 150px;
+  }
+
+  .pack {
+    width: 200px;
+    height: 285px;
+  }
+}

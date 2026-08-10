@@ -13,6 +13,7 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         gamesList: resolve(__dirname, 'games/index.html'),
         gamesRunner: resolve(__dirname, 'games/runner/index.html'),
+        gamesCards: resolve(__dirname, 'games/cards/index.html'),
       },
       output: {
         entryFileNames: '[name].js',
