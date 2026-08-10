@@ -7,6 +7,7 @@
 | ホスティング | GitHub Pages（GitHub Actions からデプロイ） |
 | リポジトリ | https://github.com/ortransf/mounige-radio-site |
 | 公開URL | https://ortransf.github.io/mounige-radio-site/ |
+| 移行先ドメイン | **monigeradio.com**（Cloudflare Registrar で取得予定） |
 | デプロイ契機 | `main` への push（[.github/workflows/deploy.yml](.github/workflows/deploy.yml)） |
 
 `main` に push すれば1〜2分で本番に反映される。手動実行は Actions タブの
@@ -23,96 +24,102 @@ GitHub Pages のサブパス公開（`github.io/mounige-radio-site/`）では全
 
 ---
 
-## 独自ドメインへの移行手順（GCP でドメインを取得する場合）
+## monigeradio.com への移行手順
 
-ドメイン名を `example.com` として書く。実際の名前に読み替えること。
+### Step 1. ドメインを取得する（要決済・手動）
 
-### 1. GCP でドメインを取得する
+1. https://dash.cloudflare.com/ にログイン（アカウントが無ければ作成し、メール認証を済ませる）
+2. 左メニューの **Domain Registration > Register Domains**
+3. `monigeradio` を検索し、`.com` を選んで購入（$10.44/年程度、10年まで一括可）
+4. 連絡先情報は **ASCII（英数字）で入力**（日本語不可）。住所は英語表記で
+5. Whois 代行は Cloudflare が無料で自動適用されるため設定不要
 
-```powershell
-# 空きと価格を確認
-gcloud domains registrations search-domains example.com
+購入すると Cloudflare のネームサーバーが自動で設定され、DNS ゾーンも同時に作られる。
 
-# Cloud DNS ゾーンを同時に作って登録（対話式で連絡先情報を入力）
-gcloud domains registrations register example.com --project=site-340803
-```
+### Step 2. DNS レコードを追加する
 
-登録時に「Cloud DNS ゾーンを作る」を選ぶとゾーンが自動生成される。
-既存ゾーンを使う場合や手動で作る場合:
+Cloudflare ダッシュボード > `monigeradio.com` > **DNS > Records** で以下を追加。
 
-```powershell
-gcloud dns managed-zones create mounige `
-  --dns-name=example.com `
-  --description="もう逃げラジオ" `
-  --project=site-340803
-```
+| Type | Name | Content | Proxy status |
+|---|---|---|---|
+| A | `@` | `185.199.108.153` | **DNS only（グレー雲）** |
+| A | `@` | `185.199.109.153` | **DNS only** |
+| A | `@` | `185.199.110.153` | **DNS only** |
+| A | `@` | `185.199.111.153` | **DNS only** |
+| AAAA | `@` | `2606:50c0:8000::153` | **DNS only** |
+| AAAA | `@` | `2606:50c0:8001::153` | **DNS only** |
+| AAAA | `@` | `2606:50c0:8002::153` | **DNS only** |
+| AAAA | `@` | `2606:50c0:8003::153` | **DNS only** |
+| CNAME | `www` | `ortransf.github.io` | **DNS only** |
 
-### 2. DNS レコードを設定する
-
-**Apex ドメイン（example.com）で公開する場合** — A と AAAA を各4本ずつ:
-
-```powershell
-gcloud dns record-sets create example.com. --zone=mounige --type=A --ttl=3600 `
-  --rrdatas=185.199.108.153,185.199.109.153,185.199.110.153,185.199.111.153 `
-  --project=site-340803
-
-gcloud dns record-sets create example.com. --zone=mounige --type=AAAA --ttl=3600 `
-  --rrdatas=2606:50c0:8000::153,2606:50c0:8001::153,2606:50c0:8002::153,2606:50c0:8003::153 `
-  --project=site-340803
-
-# www でもアクセスできるようにする（任意だが推奨）
-gcloud dns record-sets create www.example.com. --zone=mounige --type=CNAME --ttl=3600 `
-  --rrdatas=ortransf.github.io. --project=site-340803
-```
-
-**www サブドメイン（www.example.com）を本番にする場合** — CNAME 1本でよい:
-
-```powershell
-gcloud dns record-sets create www.example.com. --zone=mounige --type=CNAME --ttl=3600 `
-  --rrdatas=ortransf.github.io. --project=site-340803
-```
-
-> IP は GitHub Pages 共通のもの。変更されることがあるので、うまくいかない時は
-> GitHub 公式ドキュメント「Managing a custom domain for your GitHub Pages site」で最新値を確認する。
+> ### ⚠️ プロキシは必ず OFF（グレー雲）にする
+>
+> Cloudflare は既定でプロキシ（オレンジ雲）が ON になるが、**ON のままだと
+> GitHub Pages の HTTPS 証明書が発行できない**。DNS 応答が Cloudflare の IP を返すため、
+> GitHub が所有権を検証できずに失敗する。
+>
+> 一度証明書を発行した後にプロキシを ON に戻すことも可能だが、**証明書更新のたび
+> （約3か月ごと）にグレー雲へ戻す必要がある**ため、常時 DNS only 運用を推奨する。
+> GitHub Pages 自体が CDN 配信なので、速度面の不利はほぼない。
 
 反映確認:
 
 ```powershell
-nslookup example.com 8.8.8.8
+nslookup monigeradio.com 1.1.1.1
 ```
 
-### 3. GitHub 側でカスタムドメインを設定する
+### Step 3. GitHub 側にカスタムドメインを登録する
 
 ```powershell
-gh api repos/ortransf/mounige-radio-site/pages -X PUT -f cname=example.com
+gh api repos/ortransf/mounige-radio-site/pages -X PUT -f cname=monigeradio.com
 ```
 
-Settings > Pages からでも設定できる。設定後、GitHub が DNS を検証し
-Let's Encrypt の証明書を自動発行する（数分〜30分程度）。完了したら
-**Enforce HTTPS** にチェックを入れる。
+Settings > Pages からでも設定できる。設定後、GitHub が DNS を検証して
+Let's Encrypt の証明書を自動発行する（数分〜30分程度）。
+
+発行が完了したら **Enforce HTTPS** にチェックを入れる:
+
+```powershell
+gh api repos/ortransf/mounige-radio-site/pages -X PUT -F https_enforced=true
+```
 
 > GitHub Actions でデプロイしている場合、`CNAME` ファイルは不要（作っても無視される）。
 > リポジトリ設定側の値だけが使われる。
 
-### 4. base パスを `/` に切り替える
+### Step 4. base パスを `/` に切り替える
 
 ```powershell
 gh variable set BASE_PATH --body "/" --repo ortransf/mounige-radio-site
-
-# 再ビルド・再デプロイ（空コミット or 手動実行）
 gh workflow run deploy.yml --repo ortransf/mounige-radio-site
 ```
 
-### 5. 確認
+### Step 5. 確認
 
-- https://example.com/ が開く（HTTPS で鍵マークが出る）
-- /games/ と /games/runner/ が開き、画像とゲームが正しく表示される
-- 旧URL https://ortransf.github.io/mounige-radio-site/ は新ドメインへ自動リダイレクトされる
+- https://monigeradio.com/ が HTTPS で開く
+- `/games/` と `/games/runner/` が開き、画像とゲームが正しく表示される
+- https://www.monigeradio.com/ が apex にリダイレクトされる
+- 旧URL https://ortransf.github.io/mounige-radio-site/ が新ドメインへリダイレクトされる
 
-### 6. 後始末
+### Step 6. 後始末
 
-- [src/site/main.ts](src/site/main.ts) の OGP や meta に絶対URLを使う場合は新ドメインへ更新
-- 番組の概要欄・SNS プロフィールのリンクを新URLに差し替え
+- 番組の概要欄・SNS プロフィール・Spotify などのリンクを新URLへ差し替え
+- OGP を実装する際は絶対URLを `https://monigeradio.com/` 基準にする
+
+---
+
+## トラブルシューティング
+
+**証明書が発行されない / DNS check が進まない**
+→ プロキシがオレンジ雲になっていないか確認する（最頻出の原因）。グレー雲に直したうえで、
+GitHub 側のカスタムドメインを一度削除して再登録すると検証がやり直される。
+
+**サイトは開くが画像やCSSが 404**
+→ `BASE_PATH` の設定漏れ。`gh variable list --repo ortransf/mounige-radio-site` で確認し、
+`/` が入っていなければ Step 4 を実行する。
+
+**www で証明書エラー**
+→ GitHub Pages の証明書は apex と www の両方を含むが、www の CNAME レコードが
+無いと発行されない。Step 2 の CNAME 行を確認する。
 
 ---
 

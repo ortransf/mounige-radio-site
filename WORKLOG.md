@@ -20,6 +20,23 @@
 - 注意: actions/*@v4 系に Node20 非推奨の警告あり（動作は問題なし。
   いずれ @v5/@v6 に上げる）
 
+### ドメイン取得先を Cloudflare Registrar に変更（monigeradio.com）
+
+- **GCP での取得を取りやめ**。Cloud Domains は Google Domains の Squarespace 売却
+  （2023/9）の影響で移管・転送・Whois代行などが 2024/1 に廃止済みで、
+  今から新規に使う理由が薄いと判断（調査結果をユーザーに提示して合意）
+- **価格比較**: お名前.com は初年度1円級だが更新が実質2,000〜2,700円/年
+  （表示価格＋サービス維持調整費26%）。Cloudflare Registrar は原価提供で
+  .com $10.44/年、更新も同額 → 長期では Cloudflare が安い
+- **取得先: Cloudflare Registrar / ドメイン: monigeradio.com**（ユーザー決定）
+  ※ monigeradio は .com/.net/.org/.fm/.jp/.radio/.show/.link 全て空きを RDAP で確認済み
+- **[DEPLOY.md](DEPLOY.md) を Cloudflare 向けに全面書き換え**
+- **重要な落とし穴を発見**: Cloudflare の**プロキシ（オレンジ雲）が ON だと
+  GitHub Pages の HTTPS 証明書が発行できない**（DNS が Cloudflare の IP を返すため
+  GitHub が所有権検証できない）。証明書更新のたびに戻す必要も出るので
+  **常時 DNS only（グレー雲）運用**を手順書に明記した
+- ドメイン購入は決済を伴うためユーザーが実施。取得後は DEPLOY.md の Step 2 以降を実行
+
 ### 独自ドメイン移行の準備（GCP でドメイン取得予定）
 
 - **方針決定（ユーザー選択）: ホスティングは GitHub Pages のまま、GCP で取得した
