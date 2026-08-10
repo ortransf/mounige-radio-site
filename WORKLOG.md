@@ -5,6 +5,29 @@
 
 ---
 
+## 2026-08-10
+
+### 🚀 GitHub Pages 公開完了（フェーズ1完了）
+
+- git init（main）→ 初回コミット（62ファイル）
+- `gh repo create mounige-radio-site --public --source . --push`
+  → **https://github.com/ortransf/mounige-radio-site**
+- .github/workflows/deploy.yml 新規作成（push で build → deploy、Node 22、
+  actions/upload-pages-artifact@v3 + deploy-pages@v4）
+- Pages を build_type=workflow で有効化。初回デプロイ成功（build 11s / deploy 8s）
+- **公開URL: https://ortransf.github.io/mounige-radio-site/**
+  全ページ・アセット 200 確認、本番スクリーンショットで表示確認済み
+- 注意: actions/*@v4 系に Node20 非推奨の警告あり（動作は問題なし。
+  いずれ @v5/@v6 に上げる）
+
+### 残タスク
+
+- ゲーム背景の AI 生成（Google AI Studio 課金有効化待ち → gen_bg.py 再実行）
+- ブラウザでの実プレイ確認（体感調整）
+- OGP メタタグ、Spotify embed などフェーズ2（PLAN.md 参照）
+
+---
+
 ## 2026-08-08
 
 ### ★ セッション終了時点の状態と次にやること

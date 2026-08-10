@@ -35,8 +35,8 @@
 | ゲーム一覧ページ | ✅ 完成（registry 駆動、サムネイルは絵文字プレースホルダ） |
 | ランナーゲーム | ✅ 遊べる状態（ホスト選択・ジャンプ・障害物・⭐収集・スコア） |
 | ビルド | ✅ green（tsc + Vite 6） |
-| git リポジトリ | ❌ 未初期化 |
-| デプロイ | ❌ .github/ が空。GitHub Pages 用ワークフロー未作成 |
+| git リポジトリ | ✅ https://github.com/ortransf/mounige-radio-site |
+| デプロイ | ✅ 公開中: https://ortransf.github.io/mounige-radio-site/ （push で自動デプロイ） |
 | ゲームのサムネイル画像 | ✅ 完成（読書イラストから生成） |
 | キャラクター画像 | ✅ 組み込み済み（杉本=紫パーカー / 前川=水色スーツ、テーマ色も実キャラ色に統一） |
 | 番組ロゴ | ✅ ナビ・ホーム hero・favicon に適用 |
@@ -46,13 +46,13 @@
 
 ## 5. ロードマップ
 
-### フェーズ 1: 公開する（最優先）
+### フェーズ 1: 公開する ✅ 完了（2026-08-10）
 
-- [ ] `git init` + 初回コミット
-- [ ] GitHub リポジトリ `mounige-radio-site` 作成・push
-- [ ] `.github/workflows/deploy.yml` — push 時に build → GitHub Pages へデプロイ
+- [x] `git init` + 初回コミット
+- [x] GitHub リポジトリ `mounige-radio-site` 作成・push
+- [x] `.github/workflows/deploy.yml` — push 時に build → GitHub Pages へデプロイ
       （actions/deploy-pages 方式。Node 22 を CI で使用）
-- [ ] 公開 URL で全ページ・ゲーム動作確認（base パス起因のリンク切れチェック）
+- [x] 公開 URL で全ページ・アセットの応答確認（ゲームの実プレイ確認はブラウザで実施予定）
 
 ### フェーズ 2: 内容を整える
 
