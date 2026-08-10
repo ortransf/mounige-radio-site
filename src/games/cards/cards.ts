@@ -36,29 +36,29 @@ export const CHAR_FILES: Record<CharKey, string> = {
 
 export const CARDS: CardDef[] = [
   // ★ ノーマル（12種）
-  { id: 1, title: '積読タワー', comment: '買った時点で満足してしまった', char: 'sugimoto', rarity: 1 },
-  { id: 2, title: '深夜の映画鑑賞', comment: '明日も仕事、でも止まらない', char: 'sugimoto_b', rarity: 1 },
+  { id: 1, title: '積読タワー', comment: '読む本がたくさん溜まっているけど気にしない', char: 'maekawa', rarity: 1 },
+  { id: 2, title: 'スーパーの天井気にしたことない', comment: 'スーパーの天井って実は誰も覚えてないんじゃないか', char: 'maekawa_b', rarity: 1 },
   { id: 3, title: '現実逃避', comment: 'もう逃してくれ', char: 'sugimoto', rarity: 1 },
-  { id: 4, title: 'サブスク巡回', comment: '観る作品を探して一時間', char: 'maekawa', rarity: 1 },
-  { id: 5, title: 'ノスタルジー', comment: '脳内が平成に支配されている', char: 'maekawa_b', rarity: 1 },
-  { id: 6, title: '書店で長考', comment: '三十分立ち読みして、買わない', char: 'sugimoto_b', rarity: 1 },
-  { id: 7, title: '通勤のおとも', comment: 'イヤホンだけが命綱', char: 'maekawa', rarity: 1 },
-  { id: 8, title: '休日の惰眠', comment: '気づけばもう夕方だった', char: 'sugimoto', rarity: 1 },
-  { id: 9, title: 'カフェで作業するふり', comment: '進捗はゼロ、雰囲気は満点', char: 'maekawa_b', rarity: 1 },
-  { id: 10, title: '積みゲー', comment: 'いつかやる、たぶん、きっと', char: 'sugimoto_b', rarity: 1 },
-  { id: 11, title: '夜更かし', comment: '明日の自分に丸投げする', char: 'maekawa', rarity: 1 },
+  { id: 4, title: '男、お茶できる友達がいない問題', comment: '友達をみつけよう', char: 'maekawa', rarity: 1 },
+  { id: 5, title: '平成懐古', comment: '慎吾ママを子供に見せる杉本', char: 'sugimoto_b', rarity: 1 },
+  { id: 6, title: 'ワールドカップ見てないこと言わない方がいいよ', comment: '前川が言われた謎の一言', char: 'maekawa_b', rarity: 1 },
+  { id: 7, title: '劇中のテレビ鑑賞シーンがさみしすぎる', comment: '映画やドラマでのテレビ鑑賞シーンが恐ろしいくらい寂しい', char: 'maekawa', rarity: 1 },
+  { id: 8, title: '承認欲求を大事にしよう', comment: '自虐禁止！', char: 'sugimoto', rarity: 1 },
+  { id: 9, title: '作品と人格切り離せる？', comment: '作品と人格切り離せるのか、難しい', char: 'maekawa_b', rarity: 1 },
+  { id: 10, title: '王様のブランチの大革命', comment: '佐藤栞里さんの単独司会はテレビ史にのこる偉業', char: 'sugimoto_b', rarity: 1 },
+  { id: 11, title: 'トイ・ストーリーガチ勢', comment: 'トイ・ストーリー5に向けて準備は万端だった前川', char: 'maekawa', rarity: 1 },
   { id: 12, title: '収録前のコンビニ', comment: '飲み物選びに五分かける', char: 'sugimoto', rarity: 1 },
 
   // ★★ レア（5種）
-  { id: 13, title: '脱線トーク', comment: '本題に戻れる気配がない', char: 'both', rarity: 2 },
-  { id: 14, title: 'ネタバレ厳禁', comment: '言いたい。しかし言えない', char: 'maekawa_b', rarity: 2 },
-  { id: 15, title: '限界アラサー', comment: '体力と気力の残高がゼロ', char: 'sugimoto_b', rarity: 2 },
-  { id: 16, title: '熱弁', comment: '好きな作品の話は止まらない', char: 'maekawa', rarity: 2 },
+  { id: 13, title: '会社の評価制度きつすぎ', comment: '会社の評価制度がきついんで逃げだしたい', char: 'both', rarity: 2 },
+  { id: 14, title: '喪主やめたい', comment: 'どうにか葬儀会社が喪主やってくれませんか', char: 'maekawa_b', rarity: 2 },
+  { id: 15, title: 'カレーのじゃがいも過小評価されすぎ', comment: 'じゃがいもこそカレーのメインになるべきだと過激な主張', char: 'sugimoto_b', rarity: 2 },
+  { id: 16, title: '職場でお土産配れない', comment: '職場でお土産配るのって一大イベント過ぎて一苦労だ', char: 'maekawa', rarity: 2 },
   { id: 17, title: '読書会', comment: '積んだ本の話をする回', char: 'both', rarity: 2 },
 
   // ★★★ スーパーレア（2種）
   { id: 18, title: 'ON AIR', comment: '今日も収録がはじまる', char: 'both_b', rarity: 3 },
-  { id: 19, title: '完パケ', comment: '編集を終えた夜のビール', char: 'both', rarity: 3 },
+  { id: 19, title: '大学で出会ったふたり', comment: 'かれこれ10年以上の付き合いなんだから', char: 'both', rarity: 3 },
 
   // ★★★★ ウルトラレア（1種）
   { id: 20, title: 'もう逃げラジオ', comment: '一緒に逃げ出しましょう', char: 'both_b', rarity: 4 },
@@ -77,7 +77,7 @@ function weightedPick(pool: CardDef[]): CardDef {
   return pool[pool.length - 1];
 }
 
-export const PACK_SIZE = 5;
+export const PACK_SIZE = 3;
 
 /**
  * 1パック分を抽選する。最後の1枚は必ず★★以上（当たり枠）。
