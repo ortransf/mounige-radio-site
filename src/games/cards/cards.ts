@@ -67,11 +67,22 @@ export const CARDS: CardDef[] = [
 /** レアリティごとの抽選ウェイト（数値が大きいほど出やすい） */
 const WEIGHTS: Record<Rarity, number> = { 1: 100, 2: 28, 3: 7, 4: 2 };
 
-function weightedPick(pool: CardDef[]): CardDef {
-  const total = pool.reduce((sum, c) => sum + WEIGHTS[c.rarity], 0);
+/** 未入手カードに掛ける倍率。ダブりばかりで集まらない状態を緩和する */
+const NEW_CARD_BONUS = 2;
+
+/** 所持済みカードIDの集合。コレクション機能を持たない呼び出し側は省略できる */
+export type OwnedIds = ReadonlySet<number>;
+
+function weightOf(card: CardDef, owned?: OwnedIds): number {
+  const base = WEIGHTS[card.rarity];
+  return owned && !owned.has(card.id) ? base * NEW_CARD_BONUS : base;
+}
+
+function weightedPick(pool: CardDef[], owned?: OwnedIds): CardDef {
+  const total = pool.reduce((sum, c) => sum + weightOf(c, owned), 0);
   let r = Math.random() * total;
   for (const card of pool) {
-    r -= WEIGHTS[card.rarity];
+    r -= weightOf(card, owned);
     if (r <= 0) return card;
   }
   return pool[pool.length - 1];
@@ -82,19 +93,20 @@ export const PACK_SIZE = 3;
 /**
  * 1パック分を抽選する。最後の1枚は必ず★★以上（当たり枠）。
  * 同じパック内で重複しないようにする。
+ * owned を渡すと未入手カードが出やすくなる。
  */
-export function drawPack(): CardDef[] {
+export function drawPack(owned?: OwnedIds): CardDef[] {
   const remaining = [...CARDS];
   const result: CardDef[] = [];
 
   for (let i = 0; i < PACK_SIZE - 1; i++) {
-    const card = weightedPick(remaining);
+    const card = weightedPick(remaining, owned);
     result.push(card);
     remaining.splice(remaining.indexOf(card), 1);
   }
 
   const rarePool = remaining.filter((c) => c.rarity >= 2);
-  result.push(weightedPick(rarePool.length ? rarePool : remaining));
+  result.push(weightedPick(rarePool.length ? rarePool : remaining, owned));
 
   return result;
 }

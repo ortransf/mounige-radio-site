@@ -7,6 +7,28 @@
 
 ## 2026-08-10
 
+### 🗂 カードのコレクション保存（feature/cards・本番未反映）
+
+- **保存先は localStorage**（サーバー無しの静的サイトのため）。キー `mounige:cards:v1`、
+  `{ v, counts: {カードID: 枚数}, packs, firstAt, lastAt }`。
+  **カードIDを鍵にしたので後からカードを増やしても既存データは生き残る**
+- 新規 [src/games/cards/storage.ts](src/games/cards/storage.ts) に読み書きを集約。
+  `sanitize()` で JSON 破損・型不正・未知IDを全部弾き、**壊れていたら初期状態で復帰**。
+  localStorage が使えない環境ではメモリ上で動かし、画面に注意書きを出す
+- UI: 同ページ内のタブ切替（開封 / コレクション）。未入手は **`filter: brightness(0)` の
+  シルエット**で番号とレアリティだけ見える。重複は ×N バッジ、初入手は NEW バッジ
+- **抽選に未入手ボーナス（×2）**を追加。`drawPack(owned?)` と引数で受ける形にして、
+  cards.ts が localStorage を知らない構造は維持
+- **バグを1件修正**: `.hidden` を `.pack-stage.hidden` のように個別指定していたため、
+  新しく追加した要素（コンプリート表示・保存警告・view切替）に効かず、
+  0/20 なのに「コンプリート！」が出ていた。`.cards-section .hidden` の汎用ルールに変更
+- **検証**（puppeteer-core で自動化、検証後アンインストール済み）:
+  開封→保存→リロードで保持 / 壊れたJSONから復帰 / 不正な型を捨てる / リセット /
+  localStorage 無効環境でも遊べて警告が出る / JSエラーなし
+- 6パック開封で 13/20 種、×2・×3 の重複バッジも確認
+
+### （以下は同日の作業）
+
 ### 🚀 GitHub Pages 公開完了（フェーズ1完了）
 
 - git init（main）→ 初回コミット（62ファイル）
