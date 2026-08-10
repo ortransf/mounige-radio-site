@@ -15,7 +15,7 @@ export const GAMES: GameEntry[] = [
       '杉本か前川を選んで操作。突っ込んでくる相方をかわしながら、過去回のエピソードを回収しよう！',
     path: 'games/runner/',
     emoji: '🏃',
-    thumbnail: 'images/games/runner/thumbnail.png',
+    thumbnail: 'images/games/runner/thumbnail.webp',
   },
   {
     id: 'cards',
@@ -24,6 +24,6 @@ export const GAMES: GameEntry[] = [
       'パックを開けて名場面カードを集めよう。全20種、キラのスーパーレアやウルトラレアも入っている。',
     path: 'games/cards/',
     emoji: '🃏',
-    thumbnail: 'images/cards/art/card20.jpg',
+    thumbnail: 'images/cards/art/card20.webp',
   },
 ];

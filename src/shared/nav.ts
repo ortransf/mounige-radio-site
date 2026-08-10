@@ -6,7 +6,7 @@ export function createNav(): HTMLElement {
 
   nav.innerHTML = `
     <div class="nav-container">
-      <a href="${base}" class="nav-logo"><img src="${base}images/logo.png" alt="もう逃げラジオ" /></a>
+      <a href="${base}" class="nav-logo"><img src="${base}images/logo.webp" alt="もう逃げラジオ" width="356" height="240" /></a>
       <ul class="nav-menu">
         <li><a href="${base}">ホーム</a></li>
         <li><a href="${base}games/">ゲーム</a></li>

@@ -1,6 +1,7 @@
 import '../../styles/base.css';
 import './runner.css';
 import { createNav } from '../../shared/nav.js';
+import { createFooter } from '../../shared/footer.js';
 import { createGameLoop } from '../engine/loop.js';
 import { setupCanvas } from '../engine/canvas.js';
 import { createInputState } from '../engine/input.js';
@@ -25,11 +26,12 @@ import {
 import { EPISODE_NUMBERS, EPISODE_TITLES, episodeImagePath } from './episodes.js';
 
 const base = import.meta.env.BASE_URL;
+// ホーム・ゲーム一覧と同じファイルを指す（別パスに複製するとキャッシュが効かない）
 const IMAGE_PATHS: Record<HostId, string> = {
-  sugimoto: `${base}images/games/runner/sugimoto.png`,
-  maekawa: `${base}images/games/runner/maekawa.png`,
+  sugimoto: `${base}images/chars/sugimoto.webp`,
+  maekawa: `${base}images/chars/maekawa.webp`,
 };
-const BG_COUNT = 4; // public/images/games/runner/bg/bg1..N.jpg（存在するものだけ使う）
+const BG_COUNT = 4; // public/images/games/runner/bg/bg1..N.webp（存在するものだけ使う）
 
 const root = document.getElementById('root')!;
 root.appendChild(createNav());
@@ -44,11 +46,11 @@ main.innerHTML = `
         <h2>ホストを選ぼう</h2>
         <div class="host-buttons">
           <button data-host="sugimoto" style="--host-color: ${HOST_COLORS.sugimoto}">
-            <img src="${IMAGE_PATHS.sugimoto}" alt="杉本" />
+            <img src="${IMAGE_PATHS.sugimoto}" alt="杉本" width="257" height="512" />
             <span>杉本</span>
           </button>
           <button data-host="maekawa" style="--host-color: ${HOST_COLORS.maekawa}">
-            <img src="${IMAGE_PATHS.maekawa}" alt="前川" />
+            <img src="${IMAGE_PATHS.maekawa}" alt="前川" width="255" height="512" />
             <span>前川</span>
           </button>
         </div>
@@ -65,6 +67,7 @@ main.innerHTML = `
   </section>
 `;
 root.appendChild(main);
+root.appendChild(createFooter());
 
 const canvas = main.querySelector('canvas')!;
 const wrapper = main.querySelector<HTMLDivElement>('.runner-wrapper')!;
@@ -81,15 +84,19 @@ const world = createWorld(width, height);
 
 // --- 画像ロード ---
 const hostImages: Partial<Record<HostId, HTMLImageElement>> = {};
-preloadImages([IMAGE_PATHS.sugimoto, IMAGE_PATHS.maekawa]).then(([sugimoto, maekawa]) => {
-  hostImages.sugimoto = sugimoto;
-  hostImages.maekawa = maekawa;
-});
-
 const episodeImages = new Map<number, HTMLImageElement>();
-preloadImages(EPISODE_NUMBERS.map((n) => episodeImagePath(base, n))).then((imgs) => {
-  imgs.forEach((img, i) => episodeImages.set(EPISODE_NUMBERS[i], img));
-});
+
+// ホスト2枚が最優先（これが揃うまで「ホストを選ぼう」のボタンが動かない）。
+// 過去回18枚はゲームが始まるまで要らないので、ホストのロード完了後に回す。
+preloadImages([IMAGE_PATHS.sugimoto, IMAGE_PATHS.maekawa])
+  .then(([sugimoto, maekawa]) => {
+    hostImages.sugimoto = sugimoto;
+    hostImages.maekawa = maekawa;
+  })
+  .then(() => preloadImages(EPISODE_NUMBERS.map((n) => episodeImagePath(base, n))))
+  .then((imgs) => {
+    imgs.forEach((img, i) => episodeImages.set(EPISODE_NUMBERS[i], img));
+  });
 
 // 背景は存在するものだけ集める（未生成でもゲームは動く）
 function tryLoadImage(src: string): Promise<HTMLImageElement | null> {
@@ -106,7 +113,7 @@ const bgCache = new Map<number, HTMLImageElement>();
 function loadBackground(n: number): Promise<HTMLImageElement | null> {
   const cached = bgCache.get(n);
   if (cached) return Promise.resolve(cached);
-  return tryLoadImage(`${base}images/games/runner/bg/bg${n}.jpg`).then((img) => {
+  return tryLoadImage(`${base}images/games/runner/bg/bg${n}.webp`).then((img) => {
     if (img) bgCache.set(n, img);
     return img;
   });

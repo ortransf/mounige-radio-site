@@ -1,6 +1,7 @@
 import '../../styles/base.css';
 import './cards.css';
 import { createNav } from '../../shared/nav.js';
+import { createFooter } from '../../shared/footer.js';
 import {
   CARDS,
   drawPack,
@@ -39,7 +40,7 @@ main.innerHTML = `
     <div id="view-open">
       <div class="pack-stage" id="stage">
         <button class="pack" id="pack" aria-label="パックを開ける">
-          <img src="${base}images/logo.png" alt="" />
+          <img src="${base}images/logo.webp" alt="" width="356" height="240" />
           <span class="pack-label">タップして開封</span>
         </button>
       </div>
@@ -69,6 +70,7 @@ main.innerHTML = `
   </section>
 `;
 root.appendChild(main);
+root.appendChild(createFooter());
 
 const q = <T extends HTMLElement>(sel: string) => main.querySelector<T>(sel)!;
 
@@ -101,8 +103,8 @@ function cardFaceMarkup(card: CardDef, opts: { isNew?: boolean; count?: number }
   return `
     <div class="card-front rarity-${card.rarity}">
       <div class="card-art">
-        <img class="card-bg" src="${cardArtPath(base, card.id)}" alt="" />
-        <img class="card-char ${card.char.startsWith('both') ? 'wide' : ''}" src="${charPath(base, card.char)}" alt="" />
+        <img class="card-bg" src="${cardArtPath(base, card.id)}" alt="" loading="lazy" />
+        <img class="card-char ${card.char.startsWith('both') ? 'wide' : ''}" src="${charPath(base, card.char)}" alt="" loading="lazy" />
         <span class="card-rarity">${RARITY_LABELS[card.rarity]}</span>
         ${badges}
       </div>
@@ -119,7 +121,7 @@ function packCardMarkup(card: CardDef, isNew: boolean): string {
   return `
     <div class="card-inner">
       <div class="card-back">
-        <img src="${base}images/logo.png" alt="" />
+        <img src="${base}images/logo.webp" alt="" width="356" height="240" />
       </div>
       ${cardFaceMarkup(card, { isNew })}
     </div>
@@ -209,8 +211,8 @@ function refreshCollection() {
         <div class="card collection-card locked">
           <div class="card-front rarity-${card.rarity}">
             <div class="card-art">
-              <img class="card-bg" src="${cardArtPath(base, card.id)}" alt="" />
-              <img class="card-char ${card.char.startsWith('both') ? 'wide' : ''}" src="${charPath(base, card.char)}" alt="" />
+              <img class="card-bg" src="${cardArtPath(base, card.id)}" alt="" loading="lazy" />
+              <img class="card-char ${card.char.startsWith('both') ? 'wide' : ''}" src="${charPath(base, card.char)}" alt="" loading="lazy" />
               <span class="card-rarity">${RARITY_LABELS[card.rarity]}</span>
             </div>
             <div class="card-text">

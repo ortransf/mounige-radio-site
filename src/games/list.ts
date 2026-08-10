@@ -1,6 +1,7 @@
 import '../styles/base.css';
 import './list.css';
 import { createNav } from '../shared/nav.js';
+import { createFooter } from '../shared/footer.js';
 import { GAMES } from './registry.js';
 
 const base = import.meta.env.BASE_URL;
@@ -12,19 +13,19 @@ const main = document.createElement('main');
 main.innerHTML = `
   <section class="games-section">
     <div class="games-header">
-      <img class="header-char tilt-left" src="${base}images/chars/sugimoto.png" alt="" />
+      <img class="header-char tilt-left" src="${base}images/chars/sugimoto.webp" alt="" width="257" height="512" />
       <div>
         <h1>ミニゲーム</h1>
         <p>もう逃げラジオ発のブラウザゲームで遊ぼう</p>
       </div>
-      <img class="header-char tilt-right" src="${base}images/chars/maekawa.png" alt="" />
+      <img class="header-char tilt-right" src="${base}images/chars/maekawa.webp" alt="" width="255" height="512" />
     </div>
     <div class="games-grid">
       ${GAMES.map(
         (g) => `
         <article class="game-card">
           <div class="game-thumbnail">
-            ${g.thumbnail ? `<img src="${base}${g.thumbnail}" alt="${g.name}" />` : g.emoji}
+            ${g.thumbnail ? `<img src="${base}${g.thumbnail}" alt="${g.name}" loading="lazy" />` : g.emoji}
           </div>
           <div class="game-info">
             <h3>${g.name}</h3>
@@ -37,3 +38,4 @@ main.innerHTML = `
   </section>
 `;
 root.appendChild(main);
+root.appendChild(createFooter());

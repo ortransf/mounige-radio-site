@@ -21,6 +21,8 @@
 /                     ホーム（番組紹介・配信プラットフォームへの導線）
 /games/               ミニゲーム一覧
 /games/runner/        ホスト選択ランナー（第1弾）
+/games/cards/         トレーディングカード（第2弾）
+/privacy/             プライバシーポリシー
 ```
 
 - フレームワーク不使用の TypeScript + Vite マルチページ構成
@@ -60,6 +62,9 @@
 - [x] ランナーゲームのサムネイル画像（public/images/games/runner/thumbnail.png、16:9）
 - [ ] YouTube チャンネル開設後にリンク差し替え
 - [ ] OGP メタタグ（og:title / og:image）— SNS シェア用
+      （本文が JS 生成のため、静的 HTML の `<head>` に直書きすること）
+- [x] アクセス解析（GTM `GTM-KWVH8WFT` 経由で GA4）+ プライバシーポリシーページ
+- [x] 画像を WebP に統一（3.6MB → 1.3MB）、`loading="lazy"` と `width`/`height` を付与
 - [ ] ホームに最新エピソードの埋め込み（Spotify embed iframe）を検討
 
 ### フェーズ 3: 遊びを増やす
@@ -80,7 +85,7 @@
 
 - Node を 22 LTS へ更新 → Vite を最新に戻す（ローカル環境の作業。CI は先に Node 22 で良い）
 - 独自ドメインの取得
-- アクセス解析（入れるなら Cloudflare Web Analytics などクッキーレスのもの）
+- ~~アクセス解析~~ → GTM + GA4 を導入（プライバシーポリシーで Cookie 利用を開示）
 
 ## 6. 運用方針
 

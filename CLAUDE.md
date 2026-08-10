@@ -29,6 +29,7 @@ Vite 7/8 は Node 20.19+ / 22+ が必要でクラッシュする。Node を 22 L
 | ゲーム一覧 | games/index.html | src/games/list.ts |
 | ランナーゲーム | games/runner/index.html | src/games/runner/main.ts |
 | カードゲーム | games/cards/index.html | src/games/cards/main.ts |
+| プライバシーポリシー | privacy/index.html | src/privacy/main.ts |
 
 ```
 src/
@@ -46,6 +47,11 @@ public/          そのまま dist ルートへコピーされる（favicon.svg 
 ## 規約
 
 - 各 HTML は `<div id="root">` を持ち、エントリ TS が DOM を組み立てる（フレームワーク不使用）
+- 全ページで `createNav()` と `createFooter()`（src/shared/）を呼ぶ。
+  **プライバシーポリシーへの導線はフッターだけ**なので省略しないこと
+- 画像は **WebP に統一**（public/images 配下）。透過キャラが多く PNG では重すぎるため。
+  素材を追加するときも WebP に変換してから置く（favicon.png のみ例外）
+- `<img>` には `width`/`height` を付ける（CLS 対策）。ファーストビュー外は `loading="lazy"`
 - tsconfig は `verbatimModuleSyntax` 有効 → 型は必ず `import type` で
 - 相対 import は `.js` 拡張子で書く（例: `from './world.js'`）
 - 色・フォントは src/styles/base.css の CSS 変数を使う
@@ -63,6 +69,10 @@ public/          そのまま dist ルートへコピーされる（favicon.svg 
 
 `main` に push すると GitHub Actions が自動でビルド・公開する。
 公開URL・独自ドメインへの移行手順は [DEPLOY.md](DEPLOY.md) を参照。
+
+アクセス解析は Google タグマネージャー（`GTM-KWVH8WFT`）。vite.config.ts の `gtmPlugin()` が
+**本番ビルド時だけ**スニペットを注入するので、`npm run dev` は計測されない。
+GA4 の測定タグは GTM 管理画面側で作る方針。**サイトに GA4 のスニペットを足すと二重計測になる**。
 
 base パスはリポジトリ変数 `BASE_PATH` で切り替える（未設定なら `/mounige-radio-site/`）。
 独自ドメインに移す際は `/` を設定するだけでよく、コード変更は不要。

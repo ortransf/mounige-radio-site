@@ -26,12 +26,12 @@ export const RARITY_NAMES: Record<Rarity, string> = {
 
 /** キャラ素材のファイル名（public/images/cards/chars/） */
 export const CHAR_FILES: Record<CharKey, string> = {
-  sugimoto: 'sugimoto.png',
-  sugimoto_b: 'sugimoto_b.png',
-  maekawa: 'maekawa.png',
-  maekawa_b: 'maekawa_b.png',
-  both: 'both.png',
-  both_b: 'both_b.png',
+  sugimoto: 'sugimoto.webp',
+  sugimoto_b: 'sugimoto_b.webp',
+  maekawa: 'maekawa.webp',
+  maekawa_b: 'maekawa_b.webp',
+  both: 'both.webp',
+  both_b: 'both_b.webp',
 };
 
 export const CARDS: CardDef[] = [
@@ -112,7 +112,7 @@ export function drawPack(owned?: OwnedIds): CardDef[] {
 }
 
 export function cardArtPath(base: string, id: number): string {
-  return `${base}images/cards/art/card${id}.jpg`;
+  return `${base}images/cards/art/card${id}.webp`;
 }
 
 export function charPath(base: string, char: CharKey): string {

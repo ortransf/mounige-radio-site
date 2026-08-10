@@ -1,4 +1,4 @@
-// public/images/games/runner/episodes/ep<番号>.png に存在する過去回。
+// public/images/games/runner/episodes/ep<番号>.webp に存在する過去回。
 // タイトルは番組 RSS（https://anchor.fm/s/ddb187e8/podcast/rss）由来。
 // 素材更新時は prep スクリプトの出力に合わせてここも更新する。
 export interface EpisodeInfo {
@@ -32,5 +32,5 @@ export const EPISODE_NUMBERS = EPISODES.map((e) => e.num);
 export const EPISODE_TITLES = new Map(EPISODES.map((e) => [e.num, e.title]));
 
 export function episodeImagePath(base: string, num: number): string {
-  return `${base}images/games/runner/episodes/ep${num}.png`;
+  return `${base}images/games/runner/episodes/ep${num}.webp`;
 }

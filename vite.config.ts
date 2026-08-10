@@ -9,8 +9,8 @@ const base = process.env.BASE_PATH ?? '/mounige-radio-site/';
 // GA4 の測定タグは GTM の管理画面側で作るので、サイトに埋めるのはこの ID だけ。
 // GA4 のスニペットを直接埋めると二重計測になるため、ここには絶対に足さないこと。
 // 環境変数 GTM_ID でも上書きできる。
-// ↓ ここに GTM の管理画面で発行された "GTM-XXXXXXX" を入れる。空のままなら埋め込みを飛ばす。
-const GTM_ID = process.env.GTM_ID ?? '';
+// 空にすると埋め込みを飛ばす（ローカルで解析なしのビルドを作りたいとき用）。
+const GTM_ID = process.env.GTM_ID ?? 'GTM-KWVH8WFT';
 
 /**
  * 本番ビルドのときだけ、全ページの <head> 先頭に GTM スニペットを差し込む。
@@ -64,6 +64,7 @@ export default defineConfig({
         gamesList: resolve(__dirname, 'games/index.html'),
         gamesRunner: resolve(__dirname, 'games/runner/index.html'),
         gamesCards: resolve(__dirname, 'games/cards/index.html'),
+        privacy: resolve(__dirname, 'privacy/index.html'),
       },
       output: {
         entryFileNames: '[name].js',

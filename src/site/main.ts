@@ -1,6 +1,7 @@
 import '../styles/base.css';
 import './site.css';
 import { createNav } from '../shared/nav.js';
+import { createFooter } from '../shared/footer.js';
 
 // 番組の外部リンク。空文字は「準備中」表示になる
 const LINKS = {
@@ -39,16 +40,16 @@ function initSite() {
     <section class="hero">
       <div class="hero-content">
         <div class="hero-top">
-          <img class="hero-char sugimoto" src="${base}images/chars/sugimoto.png" alt="杉本" />
-          <h1 class="hero-logo" aria-label="もう逃げラジオ"><img src="${base}images/logo.png" alt="もう逃げラジオ" /></h1>
-          <img class="hero-char maekawa" src="${base}images/chars/maekawa.png" alt="前川" />
+          <img class="hero-char sugimoto" src="${base}images/chars/sugimoto.webp" alt="杉本" width="257" height="512" />
+          <h1 class="hero-logo" aria-label="もう逃げラジオ"><img src="${base}images/logo.webp" alt="もう逃げラジオ" width="356" height="240" /></h1>
+          <img class="hero-char maekawa" src="${base}images/chars/maekawa.webp" alt="前川" width="255" height="512" />
         </div>
         <p class="tagline">もう逃してくれ。</p>
         <p>限界アラサー男子の二人が、現実からの逃避をテーマに書籍や映画、ノスタルジーについて話す podcast です。</p>
         <p>「もう逃してくれラジオ」改め、「もう逃げラジオ」を聴いて一緒に逃げ出しましょう。</p>
 
         <div class="podcast-embed">
-          <img class="platform-art" src="${base}images/chars/reading.png" alt="読書する杉本と前川" />
+          <img class="platform-art" src="${base}images/chars/reading.webp" alt="読書する杉本と前川" width="720" height="468" loading="lazy" />
           <h2>配信プラットフォーム</h2>
           <div class="platform-links">
             ${externalLink('platform-link', 'Spotify', 'spotify.svg', LINKS.spotify, base)}
@@ -73,6 +74,7 @@ function initSite() {
   `;
 
   root.appendChild(main);
+  root.appendChild(createFooter());
 }
 
 initSite();
