@@ -36,8 +36,8 @@ export const CHAR_FILES: Record<CharKey, string> = {
 
 export const CARDS: CardDef[] = [
   // ★ ノーマル（12種）
-  { id: 1, title: '積読タワー', comment: '読む本がたくさん溜まっているけど気にしない', char: 'sugimoto', rarity: 1 },
-  { id: 2, title: 'スーパーの天井気にしたことない', comment: 'スーパーの天井って実は誰も覚えてないんじゃないか', char: 'sugimoto_b', rarity: 1 },
+  { id: 1, title: '積読タワー', comment: '読む本がたくさん溜まっているけど気にしない', char: 'maekawa', rarity: 1 },
+  { id: 2, title: 'スーパーの天井気にしたことない', comment: 'スーパーの天井って実は誰も覚えてないんじゃないか', char: 'maekawa_b', rarity: 1 },
   { id: 3, title: '現実逃避', comment: 'もう逃してくれ', char: 'sugimoto', rarity: 1 },
   { id: 4, title: '男、お茶できる友達がいない問題', comment: '友達をみつけよう', char: 'maekawa', rarity: 1 },
   { id: 5, title: '平成懐古', comment: '慎吾ママを子供に見せる杉本', char: 'sugimoto_b', rarity: 1 },
