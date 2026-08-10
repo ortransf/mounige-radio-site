@@ -52,7 +52,7 @@ export const CARDS: CardDef[] = [
   // ★★ レア（5種）
   { id: 13, title: '会社の評価制度きつすぎ', comment: '会社の評価制度がきついんで逃げだしたい', char: 'both', rarity: 2 },
   { id: 14, title: '喪主やめたい', comment: 'どうにか葬儀会社が喪主やってくれませんか', char: 'maekawa_b', rarity: 2 },
-  { id: 15, title: 'カレーのじゃがいも過小評価されすぎ', comment: 'じゃがいもこそカレーのメインになるべきだと主張する男', char: 'sugimoto_b', rarity: 2 },
+  { id: 15, title: 'カレーのじゃがいも過小評価されすぎ', comment: 'じゃがいもこそカレーのメインになるべきだと過激な主張', char: 'sugimoto_b', rarity: 2 },
   { id: 16, title: '職場でお土産配れない', comment: '職場でお土産配るのって一大イベント過ぎて一苦労だ', char: 'maekawa', rarity: 2 },
   { id: 17, title: '読書会', comment: '積んだ本の話をする回', char: 'both', rarity: 2 },
 
@@ -77,7 +77,7 @@ function weightedPick(pool: CardDef[]): CardDef {
   return pool[pool.length - 1];
 }
 
-export const PACK_SIZE = 5;
+export const PACK_SIZE = 3;
 
 /**
  * 1パック分を抽選する。最後の1枚は必ず★★以上（当たり枠）。
