@@ -6,8 +6,9 @@
 |---|---|
 | ホスティング | GitHub Pages（GitHub Actions からデプロイ） |
 | リポジトリ | https://github.com/ortransf/mounige-radio-site |
-| 公開URL | https://ortransf.github.io/mounige-radio-site/ |
-| 移行先ドメイン | **monigeradio.com**（Cloudflare Registrar で取得予定） |
+| 公開URL | **https://monigeradio.com/** |
+| ドメイン | monigeradio.com（Cloudflare Registrar / DNS も Cloudflare） |
+| 旧URL | https://ortransf.github.io/mounige-radio-site/ （新ドメインへリダイレクト） |
 | デプロイ契機 | `main` への push（[.github/workflows/deploy.yml](.github/workflows/deploy.yml)） |
 
 `main` に push すれば1〜2分で本番に反映される。手動実行は Actions タブの
@@ -24,7 +25,10 @@ GitHub Pages のサブパス公開（`github.io/mounige-radio-site/`）では全
 
 ---
 
-## monigeradio.com への移行手順
+## monigeradio.com への移行手順（✅ 2026-08-10 完了済み・記録として保持）
+
+> 以下は実施済み。同じ構成をもう一度組む場合や、設定が壊れたときの参照用。
+> 現在の設定値: `BASE_PATH=/`、GitHub Pages の cname=monigeradio.com、HTTPS 強制 ON。
 
 ### Step 1. ドメインを取得する（要決済・手動）
 

@@ -36,7 +36,8 @@
 | ランナーゲーム | ✅ 遊べる状態（ホスト選択・ジャンプ・障害物・⭐収集・スコア） |
 | ビルド | ✅ green（tsc + Vite 6） |
 | git リポジトリ | ✅ https://github.com/ortransf/mounige-radio-site |
-| デプロイ | ✅ 公開中: https://ortransf.github.io/mounige-radio-site/ （push で自動デプロイ） |
+| デプロイ | ✅ 公開中: **https://monigeradio.com/** （push で自動デプロイ） |
+| 独自ドメイン | ✅ monigeradio.com（Cloudflare Registrar、HTTPS 強制 ON） |
 | ゲームのサムネイル画像 | ✅ 完成（読書イラストから生成） |
 | キャラクター画像 | ✅ 組み込み済み（杉本=紫パーカー / 前川=水色スーツ、テーマ色も実キャラ色に統一） |
 | 番組ロゴ | ✅ ナビ・ホーム hero・favicon に適用 |

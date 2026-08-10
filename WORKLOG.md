@@ -20,6 +20,18 @@
 - 注意: actions/*@v4 系に Node20 非推奨の警告あり（動作は問題なし。
   いずれ @v5/@v6 に上げる）
 
+### 🎉 独自ドメイン monigeradio.com で公開完了
+
+- ユーザーが Cloudflare Registrar でドメイン取得 + DNS レコード9件を設定
+  （プロキシは全て DNS only。設定画面のスクショで確認し、オレンジ雲だったのを指摘して修正）
+- 検証: A×4 / AAAA×4 が GitHub の IP を直接返し、www CNAME も正常
+- `gh api ... -f cname=monigeradio.com` でカスタムドメイン登録 →
+  証明書が数分で `approved` に → `https_enforced=true` を設定
+- リポジトリ変数 `BASE_PATH=/` を設定して再デプロイ（コード変更なしで切替完了）
+- **https://monigeradio.com/ で全ページ・アセット・ゲームの動作を確認済み**
+  （旧 github.io URL からは自動リダイレクト）
+- 所要時間は実質10分程度。証明書発行が想定より早かった
+
 ### ドメイン取得先を Cloudflare Registrar に変更（monigeradio.com）
 
 - **GCP での取得を取りやめ**。Cloud Domains は Google Domains の Squarespace 売却
