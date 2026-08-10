@@ -1,11 +1,15 @@
-"""カードのタイトル・コメントを CSV で編集するためのツール。
+"""カードの内容を CSV で編集するためのツール。
 
   python scripts/cards_csv.py export   cards.ts → cards.csv を書き出す
   python scripts/cards_csv.py apply    cards.csv の内容を cards.ts に反映する
 
 CSV は Excel で開けるよう BOM 付き UTF-8 で書き出す。
-編集してよいのは title と comment の列だけ（id / char / rarity を変えると
-画像やレアリティの対応が崩れるため、apply 時に元の値で上書きする）。
+編集できるのは title / comment / レアリティ / 登場 の4列。
+id は画像ファイル（card<id>.jpg）と紐づくので変更しないこと。
+
+レアリティ: ノーマル / レア / スーパーレア / ウルトラレア
+登場: 杉本 / 杉本(B) / 前川 / 前川(B) / 2人 / 2人(B)
+      （(B) は同じ人物の別ポーズ。紫の頭＝杉本、水色の頭＋緑スーツ＝前川）
 """
 
 import csv
@@ -34,6 +38,8 @@ CHAR_NAME = {
     "maekawa": "前川", "maekawa_b": "前川(B)",
     "both": "2人", "both_b": "2人(B)",
 }
+RARITY_KEY = {v: k for k, v in RARITY_NAME.items()}
+CHAR_KEY = {v: k for k, v in CHAR_NAME.items()}
 
 
 def esc(s: str) -> str:
@@ -53,7 +59,7 @@ def export() -> None:
 
     with CSV.open("w", encoding="utf-8-sig", newline="") as f:
         w = csv.writer(f)
-        w.writerow(["id", "title", "comment", "レアリティ(参考)", "登場(参考)"])
+        w.writerow(["id", "title", "comment", "レアリティ", "登場"])
         for r in rows:
             w.writerow([
                 r["id"],
@@ -84,13 +90,38 @@ def apply() -> None:
         comment = (row.get("comment") or "").strip()
         if not title or not comment:
             raise SystemExit(f"id={cid} の title か comment が空です")
+
+        old_char, old_rarity = m.group("char"), int(m.group("rarity"))
+
+        rarity_in = (row.get("レアリティ") or "").strip()
+        if rarity_in and rarity_in not in RARITY_KEY:
+            raise SystemExit(
+                f"id={cid} のレアリティ '{rarity_in}' が不正。"
+                f"使えるのは: {' / '.join(RARITY_KEY)}"
+            )
+        rarity = RARITY_KEY.get(rarity_in, old_rarity)
+
+        char_in = (row.get("登場") or "").strip()
+        if char_in and char_in not in CHAR_KEY:
+            raise SystemExit(
+                f"id={cid} の登場 '{char_in}' が不正。使えるのは: {' / '.join(CHAR_KEY)}"
+            )
+        char = CHAR_KEY.get(char_in, old_char)
+
         old_t, old_c = unesc(m.group("title")), unesc(m.group("comment"))
+        diffs = []
         if title != old_t or comment != old_c:
-            changed.append(f"  #{cid:02d} {old_t} / {old_c}\n      → {title} / {comment}")
-        # char と rarity は CSV 側の値を無視し、元の定義を維持する
+            diffs.append(f"{old_t} / {old_c}\n      → {title} / {comment}")
+        if char != old_char:
+            diffs.append(f"登場: {CHAR_NAME[old_char]} → {CHAR_NAME[char]}")
+        if rarity != old_rarity:
+            diffs.append(f"レアリティ: {RARITY_NAME[old_rarity]} → {RARITY_NAME[rarity]}")
+        if diffs:
+            changed.append(f"  #{cid:02d} " + "\n      ".join(diffs))
+
         return (
             f"{{ id: {cid}, title: '{esc(title)}', comment: '{esc(comment)}', "
-            f"char: '{m.group('char')}', rarity: {m.group('rarity')} }},"
+            f"char: '{char}', rarity: {rarity} }},"
         )
 
     updated = LINE_RE.sub(replace, src)
