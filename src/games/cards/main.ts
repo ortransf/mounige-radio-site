@@ -53,7 +53,7 @@ function cardMarkup(card: CardDef): string {
       </div>
       <div class="card-front rarity-${card.rarity}">
         <div class="card-art">
-          <img class="card-bg" src="${cardArtPath(base, card.id)}" alt="" loading="lazy" />
+          <img class="card-bg" src="${cardArtPath(base, card.id)}" alt="" />
           <img class="card-char ${card.char.startsWith('both') ? 'wide' : ''}" src="${charPath(base, card.char)}" alt="" />
           <span class="card-rarity">${RARITY_LABELS[card.rarity]}</span>
         </div>
