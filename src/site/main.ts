@@ -43,8 +43,9 @@ function initSite() {
           <h1 class="hero-logo" aria-label="もう逃げラジオ"><img src="${base}images/logo.png" alt="もう逃げラジオ" /></h1>
           <img class="hero-char maekawa" src="${base}images/chars/maekawa.png" alt="前川" />
         </div>
-        <p>映画・書籍のレビュー、番組に関連する雑談などを扱うポッドキャスト番組。</p>
-        <p>杉本と前川がお届けします。</p>
+        <p class="tagline">もう逃してくれ。</p>
+        <p>限界アラサー男子の二人が、現実からの逃避をテーマに書籍や映画、ノスタルジーについて話す podcast です。</p>
+        <p>「もう逃してくれラジオ」改め、「もう逃げラジオ」を聴いて一緒に逃げ出しましょう。</p>
 
         <div class="podcast-embed">
           <img class="platform-art" src="${base}images/chars/reading.png" alt="読書する杉本と前川" />

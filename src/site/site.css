@@ -49,10 +49,22 @@
 }
 
 .hero p {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: var(--text-secondary);
+  margin-bottom: 1rem;
+  line-height: 1.9;
+}
+
+.hero p:last-of-type {
   margin-bottom: 2rem;
-  line-height: 1.8;
+}
+
+/* キャッチコピーは番組の顔なので大きく強調する */
+.hero .tagline {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  color: var(--accent);
+  margin-bottom: 1.2rem;
 }
 
 .cta-buttons {
@@ -225,16 +237,20 @@ a.sns-link:hover {
     height: 140px;
   }
 
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .hero .tagline {
+    font-size: 1.4rem;
+  }
+
   .hero-char {
     height: 90px;
   }
 
   .hero-top {
     gap: 0.8rem;
-  }
-
-  .hero p {
-    font-size: 1rem;
   }
 
   .cta-buttons {
