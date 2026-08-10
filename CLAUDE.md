@@ -58,9 +58,18 @@ public/          そのまま dist ルートへコピーされる（favicon.svg 
 3. vite.config.ts の `rollupOptions.input` にエントリを追加
 4. src/games/registry.ts の `GAMES` に登録（一覧ページに自動で並ぶ）
 
+## デプロイ
+
+`main` に push すると GitHub Actions が自動でビルド・公開する。
+公開URL・独自ドメインへの移行手順は [DEPLOY.md](DEPLOY.md) を参照。
+
+base パスはリポジトリ変数 `BASE_PATH` で切り替える（未設定なら `/mounige-radio-site/`）。
+独自ドメインに移す際は `/` を設定するだけでよく、コード変更は不要。
+
 ## 計画と作業ログ
 
 - サイト全体の方針・ロードマップ: [PLAN.md](PLAN.md)
+- デプロイ・ドメイン設定: [DEPLOY.md](DEPLOY.md)
 - 作業履歴: [WORKLOG.md](WORKLOG.md)
 
 **作業ログの運用ルール（重要）**: セッションが切れても文脈を引き継げるように、

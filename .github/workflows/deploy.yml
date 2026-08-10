@@ -25,6 +25,9 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          # 独自ドメインに移すときはリポジトリ変数 BASE_PATH に "/" を設定する
+          BASE_PATH: ${{ vars.BASE_PATH || '/mounige-radio-site/' }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
