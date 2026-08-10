@@ -10,7 +10,7 @@ export interface GameEntry {
 export const GAMES: GameEntry[] = [
   {
     id: 'runner',
-    name: 'ホスト選択ランナー',
+    name: 'もう逃げランナー',
     description:
       '杉本か前川を選んで操作。突っ込んでくる相方をかわしながら、過去回のエピソードを回収しよう！',
     path: 'games/runner/',

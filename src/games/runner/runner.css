@@ -49,6 +49,11 @@
   display: none;
 }
 
+/* リザルトは要素が多いので詰めて表示する */
+#gameover-overlay {
+  gap: 0.7rem;
+}
+
 .runner-overlay h2 {
   font-size: 1.6rem;
 }
@@ -106,50 +111,75 @@
 }
 
 .collected-episodes {
-  max-width: 85%;
-  max-height: 180px;
+  width: min(560px, 88%);
+  max-height: 216px;
   overflow-y: auto;
   color: #cdc2e0;
   font-size: 0.9rem;
-  line-height: 1.8;
 }
 
 .collected-title {
   font-family: var(--font-pixel);
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
 }
 
+/* タイトルを併記するので横一列 × 縦積みのリスト形式にする */
 .episode-grid {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.7rem;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
 }
 
 .episode-chip {
   position: relative;
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 6px;
+  padding: 0.35rem 0.6rem 0.35rem 0.35rem;
 }
 
 .episode-chip img {
-  width: 56px;
-  height: 56px;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
   display: block;
   border: 2px solid #ffffff;
   border-radius: 4px;
 }
 
 .episode-chip figcaption {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.episode-num {
   font-family: var(--font-pixel);
-  font-size: 0.75rem;
-  text-align: center;
-  margin-top: 0.2rem;
+  font-size: 0.8rem;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.episode-title {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  /* 長いタイトルは2行で打ち切る */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .episode-count {
   position: absolute;
-  top: -6px;
-  right: -8px;
+  top: -4px;
+  left: 34px;
   background: var(--accent);
   color: #fff;
   font-family: var(--font-pixel);

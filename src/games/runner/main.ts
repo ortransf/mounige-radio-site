@@ -22,7 +22,7 @@ import {
   RIVAL_HEIGHT,
   RIVAL_MARGIN,
 } from './obstacle.js';
-import { EPISODE_NUMBERS, episodeImagePath } from './episodes.js';
+import { EPISODE_NUMBERS, EPISODE_TITLES, episodeImagePath } from './episodes.js';
 
 const base = import.meta.env.BASE_URL;
 const IMAGE_PATHS: Record<HostId, string> = {
@@ -37,7 +37,7 @@ root.appendChild(createNav());
 const main = document.createElement('main');
 main.innerHTML = `
   <section class="runner-section">
-    <h1>ホスト選択ランナー</h1>
+    <h1>もう逃げランナー</h1>
     <div class="runner-wrapper">
       <canvas></canvas>
       <div class="runner-overlay" id="select-overlay">
@@ -150,7 +150,10 @@ function endGame() {
           <figure class="episode-chip">
             <img src="${episodeImagePath(base, n)}" alt="#${n} のサムネイル" />
             ${c > 1 ? `<span class="episode-count">×${c}</span>` : ''}
-            <figcaption>#${n}</figcaption>
+            <figcaption>
+              <span class="episode-num">#${n}</span>
+              <span class="episode-title">${EPISODE_TITLES.get(n) ?? ''}</span>
+            </figcaption>
           </figure>`,
       )
       .join('');
