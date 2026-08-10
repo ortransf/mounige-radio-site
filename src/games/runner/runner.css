@@ -106,10 +106,56 @@
 }
 
 .collected-episodes {
-  max-width: 80%;
+  max-width: 85%;
+  max-height: 180px;
+  overflow-y: auto;
   color: #cdc2e0;
   font-size: 0.9rem;
   line-height: 1.8;
+}
+
+.collected-title {
+  font-family: var(--font-pixel);
+  margin-bottom: 0.6rem;
+}
+
+.episode-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+}
+
+.episode-chip {
+  position: relative;
+  margin: 0;
+}
+
+.episode-chip img {
+  width: 56px;
+  height: 56px;
+  display: block;
+  border: 2px solid #ffffff;
+  border-radius: 4px;
+}
+
+.episode-chip figcaption {
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  text-align: center;
+  margin-top: 0.2rem;
+}
+
+.episode-count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-pixel);
+  font-size: 0.7rem;
+  padding: 1px 5px;
+  border-radius: 999px;
 }
 
 .runner-hud {

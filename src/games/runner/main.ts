@@ -57,7 +57,7 @@ main.innerHTML = `
       <div class="runner-overlay hidden" id="gameover-overlay">
         <h2 id="gameover-title">収録終了…</h2>
         <p id="final-score"></p>
-        <p id="collected-episodes" class="collected-episodes"></p>
+        <div id="collected-episodes" class="collected-episodes"></div>
         <button id="retry-button">もう一度</button>
       </div>
       <div class="runner-hud" id="hud"></div>
@@ -72,7 +72,7 @@ const selectOverlay = main.querySelector<HTMLDivElement>('#select-overlay')!;
 const gameoverOverlay = main.querySelector<HTMLDivElement>('#gameover-overlay')!;
 const gameoverTitle = main.querySelector<HTMLHeadingElement>('#gameover-title')!;
 const finalScore = main.querySelector<HTMLParagraphElement>('#final-score')!;
-const collectedLine = main.querySelector<HTMLParagraphElement>('#collected-episodes')!;
+const collectedLine = main.querySelector<HTMLDivElement>('#collected-episodes')!;
 const hud = main.querySelector<HTMLDivElement>('#hud')!;
 
 const { ctx, width, height } = setupCanvas(canvas, wrapper);
@@ -139,9 +139,25 @@ function endGame() {
   const name = player ? HOST_NAMES[player.host] : '';
   gameoverTitle.textContent = `${rivalName} の妨害で収録終了…`;
   finalScore.textContent = `${name} のスコア: ${getScore(world)}`;
-  collectedLine.textContent = collected.length
-    ? `回収した過去回: ${collected.map((n) => `#${n}`).join(' ')}`
-    : '過去回を1本も回収できなかった…';
+  if (collected.length) {
+    // 同じ回を複数回収したら ×N でまとめる
+    const counts = new Map<number, number>();
+    for (const n of collected) counts.set(n, (counts.get(n) ?? 0) + 1);
+    const chips = [...counts.entries()]
+      .sort((a, b) => a[0] - b[0])
+      .map(
+        ([n, c]) => `
+          <figure class="episode-chip">
+            <img src="${episodeImagePath(base, n)}" alt="#${n} のサムネイル" />
+            ${c > 1 ? `<span class="episode-count">×${c}</span>` : ''}
+            <figcaption>#${n}</figcaption>
+          </figure>`,
+      )
+      .join('');
+    collectedLine.innerHTML = `<p class="collected-title">回収した過去回</p><div class="episode-grid">${chips}</div>`;
+  } else {
+    collectedLine.textContent = '過去回を1本も回収できなかった…';
+  }
   gameoverOverlay.classList.remove('hidden');
 }
 
@@ -226,6 +242,19 @@ function render() {
 }
 
 createGameLoop(update, render).start();
+
+// デバッグ用: ?demo=gameover でリザルト画面を確認（表示検証用）
+if (new URLSearchParams(location.search).get('demo') === 'gameover') {
+  const timer = setInterval(() => {
+    if (hostImages.sugimoto && hostImages.maekawa) {
+      clearInterval(timer);
+      startGame('sugimoto');
+      collected = [101, 101, 105, 113, 120];
+      world.stars = collected.length;
+      endGame();
+    }
+  }, 100);
+}
 
 // デバッグ用: ?autostart=sugimoto|maekawa で即プレイ開始（動作確認・スクリーンショット用）
 const auto = new URLSearchParams(location.search).get('autostart');
