@@ -28,6 +28,7 @@ Vite 7/8 は Node 20.19+ / 22+ が必要でクラッシュする。Node を 22 L
 | ホーム | index.html | src/site/main.ts |
 | ゲーム一覧 | games/index.html | src/games/list.ts |
 | ランナーゲーム | games/runner/index.html | src/games/runner/main.ts |
+| カードゲーム | games/cards/index.html | src/games/cards/main.ts |
 
 ```
 src/
