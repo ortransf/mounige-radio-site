@@ -29,7 +29,7 @@ const IMAGE_PATHS: Record<HostId, string> = {
   sugimoto: `${base}images/games/runner/sugimoto.png`,
   maekawa: `${base}images/games/runner/maekawa.png`,
 };
-const BG_COUNT = 4; // public/images/games/runner/bg/bg1..N.png（存在するものだけ使う）
+const BG_COUNT = 4; // public/images/games/runner/bg/bg1..N.jpg（存在するものだけ使う）
 
 const root = document.getElementById('root')!;
 root.appendChild(createNav());
@@ -100,12 +100,34 @@ function tryLoadImage(src: string): Promise<HTMLImageElement | null> {
     img.src = src;
   });
 }
-const backgrounds: HTMLImageElement[] = [];
-for (let i = 1; i <= BG_COUNT; i++) {
-  tryLoadImage(`${base}images/games/runner/bg/bg${i}.png`).then((img) => {
-    if (img) backgrounds.push(img);
+// 全部を先読みすると重いので、遊ぶたびに1枚だけ取りに行きキャッシュする
+const bgCache = new Map<number, HTMLImageElement>();
+
+function loadBackground(n: number): Promise<HTMLImageElement | null> {
+  const cached = bgCache.get(n);
+  if (cached) return Promise.resolve(cached);
+  return tryLoadImage(`${base}images/games/runner/bg/bg${n}.jpg`).then((img) => {
+    if (img) bgCache.set(n, img);
+    return img;
   });
 }
+
+function pickBackground() {
+  const n = 1 + Math.floor(Math.random() * BG_COUNT);
+  const cached = bgCache.get(n);
+  if (cached) {
+    currentBg = cached;
+    return;
+  }
+  // 未ロードならフォールバック描画で開始し、届き次第差し替える
+  currentBg = null;
+  loadBackground(n).then((img) => {
+    if (img && world.state === 'playing') currentBg = img;
+  });
+}
+
+// ホスト選択を見ている間に1枚だけ先読みしておく
+loadBackground(1 + Math.floor(Math.random() * BG_COUNT));
 
 const obstacles = createObstacleManager(episodeImages);
 
@@ -125,10 +147,8 @@ function startGame(host: HostId) {
   const rivalImg = hostImages[rival];
   if (rivalImg) obstacles.setRivalImage(rivalImg);
   collected = [];
-  currentBg = backgrounds.length
-    ? backgrounds[Math.floor(Math.random() * backgrounds.length)]
-    : null;
   world.state = 'playing';
+  pickBackground();
   selectOverlay.classList.add('hidden');
   gameoverOverlay.classList.add('hidden');
 }
@@ -209,8 +229,8 @@ function drawBackground() {
     ctx.fillRect(0, 0, world.width, world.height);
   }
 
-  // ground
-  ctx.fillStyle = currentBg ? 'rgba(20, 20, 36, 0.85)' : '#1e1e30';
+  // ground（背景画像がある時は薄く敷いて絵柄を活かす）
+  ctx.fillStyle = currentBg ? 'rgba(20, 20, 36, 0.55)' : '#1e1e30';
   ctx.fillRect(0, world.groundY, world.width, world.height - world.groundY);
   ctx.strokeStyle = '#555577';
   ctx.beginPath();
