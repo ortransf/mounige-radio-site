@@ -42,6 +42,18 @@ h3 {
   font-weight: 400; /* Mochiy Pop One は 400 のみ */
 }
 
+/*
+ * img の width/height 属性は「読み込み前に場所を確保する（CLS 対策）」ために付けている。
+ * ただし属性はサイズ指定としても効いてしまうため、CSS で height だけ指定している画像は
+ * 属性の width が残って潰れる。ここで既定を auto に戻しておく。
+ * :where() で詳細度を 0 にしてあるので、個別の CSS 指定は普通に上書きできる。
+ * アスペクト比は属性から引き続き効くので、場所の確保はそのまま働く。
+ */
+:where(img[width][height]) {
+  width: auto;
+  height: auto;
+}
+
 a {
   color: var(--accent);
   text-decoration: none;
